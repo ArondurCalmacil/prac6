@@ -12,6 +12,7 @@ push this 0
 pop local 0
 push constant 1
 pop local 1
+
 // Start a loop
 label LOOP
 push constant 1
@@ -22,6 +23,7 @@ push local 1
 push argument 1
 gt
 if-goto END
+
 // Compare and update the maximum element
 push pointer 0
 push constant 1
@@ -31,13 +33,16 @@ push this 0
 push local 0
 gt
 if-goto MAX
+
 goto LOOP
+
+// End the loop and return the maximum element
+label END
+push local 0
+return
+
 // Update the maximum element
 label MAX
 push this 0
 pop local 0
 goto LOOP
-// End the loop and return the maximum element
-label END
-push local 0
-return
