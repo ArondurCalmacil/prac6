@@ -1,91 +1,72 @@
-// Mult.vm
-// Calculates a = x * y
+// Calculate a = x * y
 // a is a local variable
 // x & y are static variables
 
-// Put your code here.
+// Check if x is neg 
+push constant 0
+pop local 0 
 
-function MultWithSigns.main 0
-  // Initialize a to 0
-  push constant 0
-  pop local 0  // a = 0
+// Check if negative
+push constant 0
+pop temp 2 // Counter for x
+push static 0
+push constant 0
+lt
+if-goto NEG_X
 
-  // Determine the sign of x and y
-  push static 0  // Load x
-  lt
-  if-goto X_IS_NEGATIVE
-  goto X_NOT_NEGATIVE
+push static 0
+pop temp 0 // Store x in temp 0
+goto CHECK_Y
 
-  label X_IS_NEGATIVE
-  // Negate x and set the x_negative flag
-  neg
-  push constant 1
-  not
-  pop static 2  // x_negative = true
-  goto X_SIGN_DONE
+label NEG_X
+push static 0
+neg
+pop temp 0 // Store -x in temp 0
 
-  label X_NOT_NEGATIVE
-  push constant 0
-  pop static 2  // x_negative = false
+// Check if y is neg g
+label CHECK_Y
+push static 1
+push constant 0
+lt
+if-goto NEG_Y
 
-  label X_SIGN_DONE
+push static 1
+pop temp 1 // Store y in temp 1
+goto LOOP
 
-  push static 1  // Load y
-  lt
-  if-goto Y_IS_NEGATIVE
-  goto Y_NOT_NEGATIVE
+label NEG_Y
+push static 1
+neg
+pop temp 1 // Store -y in temp 1
 
-  label Y_IS_NEGATIVE
-  // Negate y and set the y_negative flag
-  neg
-  push constant 1
-  not
-  pop static 3  // y_negative = true
-  goto Y_SIGN_DONE
+label LOOP
+push temp 0 // Counter 
+push constant 0
+eq
+if-goto RESULT
 
-  label Y_NOT_NEGATIVE
-  push constant 0
-  pop static 3  // y_negative = false
+push local 0 // Push a 
+push temp 1 // Push y 
+add // Add a and y
+pop local 0 // Store sum in a
+push temp 0 // Decrement 
+push constant 1
+sub // Subtract 1 from counter
+pop temp 0 // Update  counter
+goto LOOP
 
-  label Y_SIGN_DONE
+label RESULT
+push temp 2 // Check if counter is equal to 1
+push constant 1
+eq
+if-goto NEG_RESULT
 
-  // Loop to perform multiplication
-  label LOOP_START
-  // Check if y is equal to 0
-  push static 1  // Load y
-  push constant 0
-  eq
-  if-goto END
+goto END // Jump to the end of the program
 
-  // If y is not equal to 0, perform one step of the multiplication
-  push static 0  // Load x
-  push local 0  // Load a
-  add
-  pop local 0  // a = a + x
+label NEG_RESULT
+push local 0 // Negate a 
+neg
+pop local 0 // Store in a
 
-  // Decrement y by 1
-  push static 1  // Load y
-  push constant 1
-  sub
-  pop static 1  // y = y - 1
-
-  goto LOOP_START
-
-  // Handle signs of the result
-  label END
-  push static 2  // Load x_negative
-  push static 3  // Load y_negative
-  eq
-  if-goto SAME_SIGNS
-
-  // Signs are different; negate the result
-  push local 0
-  neg
-  pop local 0
-
-  label SAME_SIGNS
-
-  // The result is in local variable a
-  // End of the program
-  label END
-  goto END
+label END
+goto END 
