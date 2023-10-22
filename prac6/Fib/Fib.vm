@@ -3,3 +3,38 @@
 
 // Put your code here.
 
+function Fib.fib 1
+
+// Check if n is less than 2 (base case)
+push argument 0
+push constant 2
+lt
+
+// If n is less than 2, go to the BASE label
+if-goto BASE
+
+// Label for the recursive case
+label RECURSE
+
+// Calculate Fib(n-1) with n-1 as the argument
+push argument 0
+push constant 1
+sub
+call Fib.fib 1
+
+// Calculate Fib(n-2) with n-2 as the argument
+push argument 0
+push constant 2
+sub
+call Fib.fib 1
+
+// Add the results
+add
+return
+
+// Label for the base case (n < 2)
+label BASE
+
+// Push the argument (n) onto the stack and return
+push argument 0
+return
