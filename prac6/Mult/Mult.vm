@@ -2,11 +2,13 @@
 // a is a local variable
 // x & y are static variables
 
+// Put your code here.
+
 // Check if x is neg 
 push constant 0
 pop local 0 
 
-// Check if negative
+// Check if x negative
 push constant 0
 pop temp 2 // Counter for x
 push static 0
@@ -23,7 +25,7 @@ push static 0
 neg
 pop temp 0 // Store -x in temp 0
 
-// Check if y is neg g
+// Check if y is neg 
 label CHECK_Y
 push static 1
 push constant 0
@@ -31,13 +33,13 @@ lt
 if-goto NEG_Y
 
 push static 1
-pop temp 1 // Store y in temp 1
+pop temp 1 // Store y
 goto LOOP
 
 label NEG_Y
 push static 1
 neg
-pop temp 1 // Store -y in temp 1
+pop temp 1 // Store -y 
 
 label LOOP
 push temp 0 // Counter 
@@ -48,15 +50,15 @@ if-goto RESULT
 push local 0 // Push a 
 push temp 1 // Push y 
 add // Add a and y
-pop local 0 // Store sum in a
-push temp 0 // Decrement 
+pop local 0 
+push temp 0 
 push constant 1
-sub // Subtract 1 from counter
+sub // Subtract 1 
 pop temp 0 // Update  counter
 goto LOOP
 
 label RESULT
-push temp 2 // Check if counter is equal to 1
+push temp 2 // Check if counter is 1
 push constant 1
 eq
 if-goto NEG_RESULT
